@@ -11,16 +11,121 @@
 * http://brm.io/jquery-match-height/
 * License MIT
 */
-        !function(t){"use strict";"function"==typeof define&&define.amd?define(["jquery"],t):"undefined"!=typeof module&&module.exports?module.exports=t(require("jquery")):t(jQuery)}(function(t){var e=-1,o=-1,i=function(t){return parseFloat(t)||0},a=function(e){var o=1,a=t(e),n=null,r=[];return a.each(function(){var e=t(this),a=e.offset().top-i(e.css("margin-top")),s=r.length>0?r[r.length-1]:null;null===s?r.push(e):Math.floor(Math.abs(n-a))<=o?r[r.length-1]=s.add(e):r.push(e),n=a}),r},n=function(e){var o={
-            byRow:!0,property:"height",target:null,remove:!1};return"object"==typeof e?t.extend(o,e):("boolean"==typeof e?o.byRow=e:"remove"===e&&(o.remove=!0),o)},r=t.fn.matchHeight=function(e){var o=n(e);if(o.remove){var i=this;return this.css(o.property,""),t.each(r._groups,function(t,e){e.elements=e.elements.not(i)}),this}return this.length<=1&&!o.target?this:(r._groups.push({elements:this,options:o}),r._apply(this,o),this)};r.version="0.7.0",r._groups=[],r._throttle=80,r._maintainScroll=!1,r._beforeUpdate=null,
-            r._afterUpdate=null,r._rows=a,r._parse=i,r._parseOptions=n,r._apply=function(e,o){var s=n(o),h=t(e),l=[h],c=t(window).scrollTop(),p=t("html").outerHeight(!0),d=h.parents().filter(":hidden");return d.each(function(){var e=t(this);e.data("style-cache",e.attr("style"))}),d.css("display","block"),s.byRow&&!s.target&&(h.each(function(){var e=t(this),o=e.css("display");"inline-block"!==o&&"flex"!==o&&"inline-flex"!==o&&(o="block"),e.data("style-cache",e.attr("style")),e.css({display:o,"padding-top":"0",
-            "padding-bottom":"0","margin-top":"0","margin-bottom":"0","border-top-width":"0","border-bottom-width":"0",height:"100px",overflow:"hidden"})}),l=a(h),h.each(function(){var e=t(this);e.attr("style",e.data("style-cache")||"")})),t.each(l,function(e,o){var a=t(o),n=0;if(s.target)n=s.target.outerHeight(!1);else{if(s.byRow&&a.length<=1)return void a.css(s.property,"");a.each(function(){var e=t(this),o=e.attr("style"),i=e.css("display");"inline-block"!==i&&"flex"!==i&&"inline-flex"!==i&&(i="block");var a={
-            display:i};a[s.property]="",e.css(a),e.outerHeight(!1)>n&&(n=e.outerHeight(!1)),o?e.attr("style",o):e.css("display","")})}a.each(function(){var e=t(this),o=0;s.target&&e.is(s.target)||("border-box"!==e.css("box-sizing")&&(o+=i(e.css("border-top-width"))+i(e.css("border-bottom-width")),o+=i(e.css("padding-top"))+i(e.css("padding-bottom"))),e.css(s.property,n-o+"px"))})}),d.each(function(){var e=t(this);e.attr("style",e.data("style-cache")||null)}),r._maintainScroll&&t(window).scrollTop(c/p*t("html").outerHeight(!0)),
-            this},r._applyDataApi=function(){var e={};t("[data-match-height], [data-mh]").each(function(){var o=t(this),i=o.attr("data-mh")||o.attr("data-match-height");i in e?e[i]=e[i].add(o):e[i]=o}),t.each(e,function(){this.matchHeight(!0)})};var s=function(e){r._beforeUpdate&&r._beforeUpdate(e,r._groups),t.each(r._groups,function(){r._apply(this.elements,this.options)}),r._afterUpdate&&r._afterUpdate(e,r._groups)};r._update=function(i,a){if(a&&"resize"===a.type){var n=t(window).width();if(n===e)return;e=n;
-        }i?-1===o&&(o=setTimeout(function(){s(a),o=-1},r._throttle)):s(a)},t(r._applyDataApi),t(window).bind("load",function(t){r._update(!1,t)}),t(window).bind("resize orientationchange",function(t){r._update(!0,t)})});
+        !function (t) {
+            "use strict";
+            "function" == typeof define && define.amd ? define(["jquery"], t) : "undefined" != typeof module && module.exports ? module.exports = t(require("jquery")) : t(jQuery)
+        }(function (t) {
+            var e = -1, o = -1, i = function (t) {
+                return parseFloat(t) || 0
+            }, a = function (e) {
+                var o = 1, a = t(e), n = null, r = [];
+                return a.each(function () {
+                    var e = t(this), a = e.offset().top - i(e.css("margin-top")),
+                        s = r.length > 0 ? r[r.length - 1] : null;
+                    null === s ? r.push(e) : Math.floor(Math.abs(n - a)) <= o ? r[r.length - 1] = s.add(e) : r.push(e), n = a
+                }), r
+            }, n = function (e) {
+                var o = {
+                    byRow: !0, property: "height", target: null, remove: !1
+                };
+                return "object" == typeof e ? t.extend(o, e) : ("boolean" == typeof e ? o.byRow = e : "remove" === e && (o.remove = !0), o)
+            }, r = t.fn.matchHeight = function (e) {
+                var o = n(e);
+                if (o.remove) {
+                    var i = this;
+                    return this.css(o.property, ""), t.each(r._groups, function (t, e) {
+                        e.elements = e.elements.not(i)
+                    }), this
+                }
+                return this.length <= 1 && !o.target ? this : (r._groups.push({
+                    elements: this,
+                    options: o
+                }), r._apply(this, o), this)
+            };
+            r.version = "0.7.0", r._groups = [], r._throttle = 80, r._maintainScroll = !1, r._beforeUpdate = null,
+                r._afterUpdate = null, r._rows = a, r._parse = i, r._parseOptions = n, r._apply = function (e, o) {
+                var s = n(o), h = t(e), l = [h], c = t(window).scrollTop(), p = t("html").outerHeight(!0),
+                    d = h.parents().filter(":hidden");
+                return d.each(function () {
+                    var e = t(this);
+                    e.data("style-cache", e.attr("style"))
+                }), d.css("display", "block"), s.byRow && !s.target && (h.each(function () {
+                    var e = t(this), o = e.css("display");
+                    "inline-block" !== o && "flex" !== o && "inline-flex" !== o && (o = "block"), e.data("style-cache", e.attr("style")), e.css({
+                        display: o,
+                        "padding-top": "0",
+                        "padding-bottom": "0",
+                        "margin-top": "0",
+                        "margin-bottom": "0",
+                        "border-top-width": "0",
+                        "border-bottom-width": "0",
+                        height: "100px",
+                        overflow: "hidden"
+                    })
+                }), l = a(h), h.each(function () {
+                    var e = t(this);
+                    e.attr("style", e.data("style-cache") || "")
+                })), t.each(l, function (e, o) {
+                    var a = t(o), n = 0;
+                    if (s.target) n = s.target.outerHeight(!1); else {
+                        if (s.byRow && a.length <= 1) return void a.css(s.property, "");
+                        a.each(function () {
+                            var e = t(this), o = e.attr("style"), i = e.css("display");
+                            "inline-block" !== i && "flex" !== i && "inline-flex" !== i && (i = "block");
+                            var a = {
+                                display: i
+                            };
+                            a[s.property] = "", e.css(a), e.outerHeight(!1) > n && (n = e.outerHeight(!1)), o ? e.attr("style", o) : e.css("display", "")
+                        })
+                    }
+                    a.each(function () {
+                        var e = t(this), o = 0;
+                        s.target && e.is(s.target) || ("border-box" !== e.css("box-sizing") && (o += i(e.css("border-top-width")) + i(e.css("border-bottom-width")), o += i(e.css("padding-top")) + i(e.css("padding-bottom"))), e.css(s.property, n - o + "px"))
+                    })
+                }), d.each(function () {
+                    var e = t(this);
+                    e.attr("style", e.data("style-cache") || null)
+                }), r._maintainScroll && t(window).scrollTop(c / p * t("html").outerHeight(!0)),
+                    this
+            }, r._applyDataApi = function () {
+                var e = {};
+                t("[data-match-height], [data-mh]").each(function () {
+                    var o = t(this), i = o.attr("data-mh") || o.attr("data-match-height");
+                    i in e ? e[i] = e[i].add(o) : e[i] = o
+                }), t.each(e, function () {
+                    this.matchHeight(!0)
+                })
+            };
+            var s = function (e) {
+                r._beforeUpdate && r._beforeUpdate(e, r._groups), t.each(r._groups, function () {
+                    r._apply(this.elements, this.options)
+                }), r._afterUpdate && r._afterUpdate(e, r._groups)
+            };
+            r._update = function (i, a) {
+                if (a && "resize" === a.type) {
+                    var n = t(window).width();
+                    if (n === e) return;
+                    e = n;
+                }
+                i ? -1 === o && (o = setTimeout(function () {
+                    s(a), o = -1
+                }, r._throttle)) : s(a)
+            }, t(r._applyDataApi), t(window).bind("load", function (t) {
+                r._update(!1, t)
+            }), t(window).bind("resize orientationchange", function (t) {
+                r._update(!0, t)
+            })
+        });
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+
+        .center {
+            text-align: center;
+            width: 100%;
+            position: relative;
+            display: block;
+        }
 
         .mfo-list {
             /*min-height: 1200px;*/
@@ -33,6 +138,13 @@
             background-position: center;
             max-width: 190px;
             margin: 0 auto;
+        }
+
+        .mfo-info {
+            float: left;
+            border: 1px solid #bbb;
+            padding: 5px;
+            margin-top: 10px;
         }
 
         .mfo {
@@ -83,6 +195,12 @@
                     "maxcreditterm": 365,
                     "button_color": "#07692a",
                     "gradient": "gradient_1",
+                    "url": "forza24.com.ua",
+                    "campaign_name": "ООО 'ФК'ФОРЗА'",
+                    "email": "сeo@forza24.com.ua",
+                    "phone": "0800305330",
+                    "address": "г. Киев, ул. В. Хвойки, д.15/15 ",
+                    "max_apr": "730%"
                 },
 
                 {
@@ -100,8 +218,13 @@
                     "maxcreditterm": 365,
                     "button_color": "#556293",
                     "gradient": "gradient_1",
-
-                    "promo": '753JSK2-32'
+                    "promo": '753JSK2-32',
+                    "campaign_name": "ООО «СС Лоун» ",
+                    "max_apr": "594%",
+                    "email": "help@ccloan.com.ua",
+                    "address": "Украина 01024, г. Киев, ул. Бассейная, дом 6",
+                    "phone": "+38 097 583-11-77 , +38 093 583-11-77, +38 044 222-77-33",
+                    "url": "ccloan.ua"
                 },
                 {
                     "name": "MyCredit",
@@ -117,7 +240,13 @@
                     "fixcreditterm": null,
                     "maxcreditterm": 365,
                     "button_color": "#2159a9",
-                    "gradient": "gradient_1"
+                    "gradient": "gradient_1",
+                    "campaign_name": "ООО «1 Безопасное Агенство Необходимых Кредитов»",
+                    "phone": "0 800 214111",
+                    "email": "support@mycredit.ua",
+                    "max_apr": "584%",
+                    "address": "01004, г. Киев, ул. Тараса Шевченко, 11, помещение 51-A",
+                    "url": "mycredit.ua"
                 },
                 {
                     "name": "Ваша Готiвочка",
@@ -134,7 +263,13 @@
                     "maxcreditterm": 365,
                     "button_color": "#07692a",
                     "gradient": "gradient_1",
-                    "promo": "2019_FREE_GET"
+                    "promo": "2019_FREE_GET",
+                    "email": "zayavka@limefin.com",
+                    "phone": "0 800 500 660",
+                    "url": "vashagotivochka.ua",
+                    "max_apr": "730%",
+                    "address": "Украина, 57214, Николаевская обл., Витовский район, село Мешково-Погорелово, УЛИЦА МИРА, 29, комната 1",
+                    "campaign_name": "ТОВАРИСТВО З ОБМЕЖЕНОЮ ВІДПОВІДАЛЬНІСТЮ 'ЛАЙМ МАНІ',"
                 },
                 {
                     "name": "SOSCREDIT",
@@ -151,6 +286,12 @@
                     "maxcreditterm": 365,
                     "button_color": "#d72038",
                     "gradient": "gradient_2",
+                    "campaign_name": "ООО 'СОС КРЕДИТ'",
+                    "address": "04070, г. Киев, ул. Почайнинская, 23",
+                    "phone": "0 800 211 767",
+                    "url": "soscredit.ua",
+                    "max_apr": "584%",
+                    "email": "support@sos-credit.com.ua "
                 },
                 {
                     "name": "CreditKassa",
@@ -166,7 +307,13 @@
                     "fixcreditterm": null,
                     "maxcreditterm": 365,
                     "button_color": "#ebb703",
-                    "gradient": "gradient_1"
+                    "gradient": "gradient_1",
+                    "campaign_name": "ООО 'УКР КРЕДИТ ФИНАНС'",
+                    "email": "info@creditkasa.com.ua ",
+                    "max_apr": "730%",
+                    "phone": " +38 -044 3335222 ",
+                    "address": "03150, г. Киев, ул. Казимира Малевича, 86-Н",
+                    "url": "creditkasa.com.ua"
                 },
                 {
                     "name": "MoneyVeo",
@@ -182,7 +329,13 @@
                     "fixcreditterm": null,
                     "maxcreditterm": 365,
                     "button_color": "#71b023",
-                    "gradient": "gradient_2"
+                    "gradient": "gradient_2",
+                    "campaign_name": "ООО 'МАНИВЕО ШВИДКА ФІНАНСОВА ДОПОМОГА'",
+                    "address": "01015, г. Киев, ул. Лейпцигская, 15-Б, первый этаж",
+                    "max_apr": "612%",
+                    "email": "support@moneyveo.ua",
+                    "phone": "0 800 219393",
+                    "url": "moneyveo.ua"
                 },
                 {
                     "name": "Ccloan",
@@ -199,7 +352,13 @@
                     "maxcreditterm": 365,
                     "button_color": "#556293",
                     "gradient": "gradient_1",
-                    "promo": "BONUS_442321123"
+                    "promo": "BONUS_442321123",
+                    "campaign_name": "ООО «СС Лоун» ",
+                    "max_apr": "594%",
+                    "email": "help@ccloan.com.ua",
+                    "address": "Украина 01024, г. Киев, ул. Бассейная, дом 6",
+                    "phone": "+38 097 583-11-77 , +38 093 583-11-77, +38 044 222-77-33",
+                    "url": "ccloan.ua"
                 },
                 {
                     "name": "Forza",
@@ -215,7 +374,13 @@
                     "fixcreditterm": null,
                     "maxcreditterm": 365,
                     "button_color": "#07692a",
-                    "gradient": "gradient_1"
+                    "gradient": "gradient_1",
+                    "url": "http://forzacredit.com.ua",
+                    "campaign_name": "ООО 'ФК ФОРЗА'",
+                    "address": "г. Киев, ул. В. Хвойки, д. 15/15",
+                    "max_apr": "675,25%",
+                    "phone": "0800300770",
+                    "email": ""
                 },
                 {
                     "name": "AlexCredit",
@@ -231,7 +396,13 @@
                     "fixcreditterm": null,
                     "maxcreditterm": 365,
                     "button_color": "#234144",
-                    "gradient": "gradient_1"
+                    "gradient": "gradient_1",
+                    "campaign_name": " ООО 'АЛЕКСКРЕДИТ'",
+                    "url": "http://alexcredit.ua",
+                    "address": "49041 г. Днепр, ул. Стартовая, 9-А, 2-этаж",
+                    "phone": "+38(044)3893303",
+                    "email": "mail@alexcredit.com.ua ",
+                    "max_apr": "619%"
                 },
                 {
                     "name": "Gofingo",
@@ -247,7 +418,13 @@
                     "fixcreditterm": null,
                     "maxcreditterm": 365,
                     "button_color": "#222248",
-                    "gradient": "gradient_1"
+                    "gradient": "gradient_1",
+                    "campaign_name": "ООО «ГОУФИНГОУ»",
+                    "address": "04071, город Киев, ул. Хорива, 1А.",
+                    "phone": "+380443337305",
+                    "max_apr": "665%",
+                    "email": "info@gofingo.com.ua",
+                    "url": "gofingo.com.ua"
                 },
                 {
                     "name": "MoneyBOOM ",
@@ -262,7 +439,13 @@
                     "fixcreditterm": null,
                     "maxcreditterm": 365,
                     "button_color": "#f79436",
-                    "gradient": "gradient_1"
+                    "gradient": "gradient_1",
+                    "campaign_name": "ООО «ИНФИНАНС»",
+                    "address": "01033, Украина. Киев, ул. Жилянская, д. 41",
+                    "email": "info@infinance.com.ua",
+                    "url": "moneyboom.ua",
+                    "phone" : "",
+                    "max_apr" : "638%"
                 },
                 {
                     "name": "Dinero",
@@ -278,7 +461,13 @@
                     "fixcreditterm": null,
                     "maxcreditterm": 365,
                     "button_color": "#ff3f00",
-                    "gradient": "gradient_1"
+                    "gradient": "gradient_1",
+                    "campaign_name": "ООО ФК 'ДИНЕРО'",
+                    "max_apr": "142,35%",
+                    "address": "04116, г. Киев, ул. Старокиевская, 10-Г",
+                    "phone": "+38(067)3262233, +38(073)3262233, +38(050)3262233",
+                    "url": "dinero.ua",
+                    "email" : "info@dinero.com.ua "
                 },
 
                 {
@@ -295,7 +484,13 @@
                     "fixcreditterm": null,
                     "maxcreditterm": 365,
                     "button_color": "#1d1d1b",
-                    "gradient": "gradient_1"
+                    "gradient": "gradient_1",
+                    "campaign_name": "ООО 'КАЧАЙ ГРОШІ'",
+                    "address": "г. Киев, ул. Володимирська, 101-А",
+                    "email": "info@kachay.com.ua",
+                    "phone": "+38(044)3376727, +38(099)5287037 ",
+                    "url": "kachay.com.ua",
+                    "max_apr" : "730%"
                 },
             ]
         };
@@ -329,25 +524,30 @@
                     + '<div class="mfo__logo"' +
                     ' style="background-image: url(' + mfo.logoPath + ');">' +
                     '</div>' +
-                    '<button class="btn btn-default">Подробнее</button>' +
-                    '<p>'
-                    + opt1 +
-                    '<br>'
-                    + opt2 +
-                    '<br>'
-                    + opt3 +
-
-                    '</p>' +
-                    '' + promo
-                    +
+                    '<span>Макс. APR: ' + mfo.max_apr + '</span>' +
+                    promo +
+                    '<p>' + opt1 + '<br>' + opt2 + '<br>' + opt3 + '</p>' +
+                    '<button class="btn btn-primary">Получить деньги</button>' +
                     '</div>';
+
+
+                let mfoInfoHtml = '<div class="mfo-info col-md-2">' +
+                    '<span style="font-weight: bold">' + mfo.name + '</span><br>' +
+                    '<span>' + mfo.campaign_name + '</span><br>' +
+                    '<span>Адрес: ' + mfo.address + '</span><br>' +
+                    '<span>E-mail: ' + mfo.email + '</span><br>' +
+                    '<span>Телефон: ' + mfo.phone + '</span><br>' +
+                    '<span>Макс. APR: ' + mfo.max_apr + '</span><br>' +
+                    '<span>Веб сайт: ' + mfo.url + '</span><br>' +
+                    '</div>';
+
                 $('.mfo-list').append(mfoHtml);
+                $('.mfo-info-list').append(mfoInfoHtml);
             });
 
 
             $('.mfo').click(function () {
                 let mfo = $(this).attr('mfo');
-                console.log(mfo);
                 $(data.offers).each(function () {
                     if ($(this)[0].name === mfo) {
                         window.open($(this)[0].link, '_blank')
@@ -356,6 +556,7 @@
             });
 
             $('.mfo').matchHeight();
+            $('.mfo-info').matchHeight();
         })
     </script>
 </head>
@@ -387,28 +588,78 @@
         </p>
     </div>
 
-    <div class="product-callout border rounded-1 mb-4 p-3 border-purple bg-purple-light">
-        <p>
-            ДЛЯ ПОЛУЧЕНИЯ ТРЕБУЕТСЯ:
-            <br>
-            <ol style="padding-left: 20px">
-
-        <li>Возраст 18+</li>
-        <li>Банковская карта</li>
-            <li>Паспорт и ИНН</li>
-            <li>Телефон</li>
-            </ol>
-        </p>
-    </div>
-
-
 </div>
 
 <div style="clear: both;position: relative;">
 
     <ul id="user-site" class="tutorial-list wrapper active">
-geeglegleglegl
+        <div>
 
+            <b>Процентная ставка</b><br>
+            <span>В микрофинансовых организациях процентная ставка варьируется от 1 до 2 процента в день.
+                <br>
+                Ряд организаций предлагает очень специальные условия новым клиентам, для которых будет задействована акционная ставка со скидкой от 30 до 70 процентов
+                , также возможен первый кредит без процентов – под 0,01% в день.</span>
+            <br>
+
+            <br>
+            <b>Требования к заемщику, для получения кредита</b>
+            <ul>
+
+                <li>Возраст не менее 18 лет</li>
+                <li>Банковская карта</li>
+                <li>Наличие гражданства Украины (Паспорт)</li>
+                <li>ИНН</li>
+                <li>Действующий мобильный телефон.</li>
+            </ul>
+
+            <br>
+            <b>Последствия, наступающие при неуплате заемных средств</b>
+
+            <br>
+
+            В случае, если кредитор не уплачивает микрофинансовой организации сумму кредита и проценты за использование кредита в оговоренный
+            срок, МФО начисляет неустойку за просрочку выплаты по кредиту.
+            Обычно, кредитные организации предоставляют дополнительно пару рабочих дней (до 3х), чтобы кредитор смог
+            внести очередной платеж, либо выплатить сумму кредита полностью, на случай непредвиденной задержки,
+            связанной с безналичным переводом денежных средств. Если кредитная организация не получает оговоренный в
+            договоре платеж в срок, она связывается с кредитором и напоминает о последствиях, наступающих при неуплате.
+
+            Рекомендуем вносить платежи вовремя, при возникновении проблем, связанных с внесением платежей, следует
+            связываться с кредитной организацией, предоставившей Вам кредит.
+            Информацию о сроках внесения платежей можно узнать в договоре на оказание кредитных услуг в конкретной
+            организации.
+
+            В случае если платежи по кредиту не поступают и кредитор не может связаться с Вами, кредитная
+            организация(МФО) начислит денежный штраф, размер которого обычно равен 0,1 процентов от суммы кредита в
+            день, размер процента следует уточнять при подписании договора на оказание кредитных услуг.
+            Следует помнить, что в случае несоблюдения сроков погашения кредита, данные о долге могут быть переданы в
+            реестр должников и далее в коллекторские организации.
+
+            В случае погашения кредита в срок (или раньше срока), Вы формируете положительную кредитную историю, которая
+            в дальнейшем поможет Вам при получении кредитов на более крупные суммы.
+
+        </div>
+
+        <br>
+
+        <b>Информация о кредиторах, представленных на сайте</b>
+        <div class="mfo-info-list"></div>
+
+
+        <br>
+        <br>
+        <div style="clear: both" class="product-callout border rounded-1 mb-4 p-3 border-purple bg-purple-light">
+            <span>
+                Данный веб-сайт не является финансовой компанией, а только предоставляет список компаний Украины.
+                Материалы, размещенные на сайте имееют информационный характер. Условия выдачи кредитов уточняйте на сайте МФО или банка.
+            </span>
+        </div>
+
+        <br>
+
+
+        <p style="text-align: center">loans-ua.github.io © 2019</p>
     </ul>
 </div>
 
