@@ -7,6 +7,35 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://pages.github.com/css/pages.css">
    
+    <!-- Global site tag (gtag.js) - Google Ads: 718378372 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-718378372"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-718378372');
+</script>
+
+    
+    <!-- Event snippet for click conversion page
+In your html page, add the snippet and call gtag_report_conversion when someone clicks on the chosen link or button. -->
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-718378372/SfJlCPGa1qcBEISrxtYC',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
+
+    
     
     <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -605,6 +634,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 
             $('.mfo').click(function () {
                 let mfo = $(this).attr('mfo');
+                gtag_report_conversion();
                 $(data.offers).each(function () {
                     if ($(this)[0].name === mfo) {
                         window.open($(this)[0].link, '_blank')
